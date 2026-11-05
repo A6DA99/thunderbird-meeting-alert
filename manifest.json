@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Meeting Alert",
+  "version": "0.5.3",
+  "description": "Find meeting invitations from chosen senders and Thunderbird accounts, with a Meetings button in the left Spaces Toolbar.",
+  "permissions": [
+    "messagesRead",
+    "accountsRead",
+    "storage",
+    "alarms",
+    "notifications",
+    "clipboardWrite"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "meeting-radar@addon.local",
+      "strict_min_version": "140.0"
+    }
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "icons": {
+    "48": "icons/meeting-alert-icon-48.png",
+    "128": "icons/meeting-alert-icon-128.png"
+  },
+  "author": "A6DA99",
+  "homepage_url": "https://github.com/A6DA99"
+}

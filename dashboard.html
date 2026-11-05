@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meetings</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="dashboard.css">
+  </head>
+  <body class="dashboard">
+    <header class="app-header">
+      <div class="heading">
+        <span class="app-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 9h16M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01"/></svg>
+        </span>
+        <div><h1>Meetings</h1><p>Meetings found in your email</p></div>
+      </div>
+      <div class="header-actions">
+        <button id="scan" class="button primary">Scan now</button>
+        <button id="toggleSettings" class="icon-button" title="Email scanning settings" aria-label="Email scanning settings">
+          <svg viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1 1.1.9-1.1 1.9-1.4-.5a7.7 7.7 0 0 1-1.5.9l-.2 1.5h-2.2l-.3-1.5a7.7 7.7 0 0 1-1.5-.9l-1.4.5-1.1-1.9 1.1-.9a7 7 0 0 1 0-1.8l-1.1-.9 1.1-1.9 1.4.5a7.7 7.7 0 0 1 1.5-.9l.3-1.5h2.2l.2 1.5a7.7 7.7 0 0 1 1.5.9l1.4-.5 1.1 1.9-1.1.9a7 7 0 0 1 0 1.7Z" transform="translate(-1 -1) scale(1.05)"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section id="settingsPanel" class="settings-panel" hidden aria-label="Email scanning settings">
+        <div class="settings-title"><div><h2>Email scanning</h2><p>Choose which senders and Thunderbird accounts Meeting Alert checks.</p></div><button id="closeSettings" class="icon-button" aria-label="Close settings">×</button></div>
+
+        <fieldset class="scope-options">
+          <legend>Email senders</legend>
+          <label class="radio-row"><input type="radio" name="senderScope" value="all" id="senderAll"><span><strong>All Emails</strong><small>Scan meeting invitations from any sender.</small></span></label>
+          <label class="radio-row"><input type="radio" name="senderScope" value="selected" id="senderSelected"><span><strong>Specific senders only</strong><small>Only scan emails sent by addresses you add below.</small></span></label>
+        </fieldset>
+        <div id="senderPicker" class="filter-picker" hidden>
+          <div class="picker-heading"><strong>Allowed sender email addresses</strong></div>
+          <div class="add-sender-row">
+            <input id="senderEmail" type="text" inputmode="email" autocomplete="off" placeholder="name@example.com" aria-label="Sender email address">
+            <button id="addSender" class="button">Add</button>
+          </div>
+          <div id="senderList" class="chip-list" aria-live="polite"></div>
+        </div>
+
+        <fieldset class="scope-options account-options">
+          <legend>Thunderbird email accounts</legend>
+          <label class="radio-row"><input type="radio" name="accountScope" value="all" id="accountAll"><span><strong>All accounts</strong><small>Include messages from every configured account.</small></span></label>
+          <label class="radio-row"><input type="radio" name="accountScope" value="selected" id="accountSelected"><span><strong>Selected accounts only</strong><small>Choose the accounts Meeting Alert should check.</small></span></label>
+        </fieldset>
+        <div id="accountPicker" class="filter-picker" hidden>
+          <div class="picker-heading"><strong>Choose email accounts</strong><button id="refreshSources" class="text-button">Refresh</button></div>
+          <div id="sourceList" class="source-list"><p class="muted">Loading email accounts…</p></div>
+        </div>
+
+        <div class="settings-footer">
+          <label class="reminder-setting">Meeting reminder
+            <select id="reminder">
+              <option value="5">5 minutes before</option>
+              <option value="15">15 minutes before</option>
+              <option value="30">30 minutes before</option>
+              <option value="60">1 hour before</option>
+            </select>
+          </label>
+          <button id="saveSettings" class="button primary">Save settings</button>
+        </div>
+        <p class="privacy-note">Email content is scanned locally on this device. Existing mail scan: last 14 days, up to 400 messages per scan. Account filtering checks messages from each selected account.</p>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <section class="meeting-section" aria-labelledby="todayHeading">
+        <div class="section-heading"><h2 id="todayHeading">Today</h2><span id="todayCount" class="count">0</span></div>
+        <div id="todayList" class="meeting-list" aria-live="polite"></div>
+      </section>
+      <section class="meeting-section" aria-labelledby="upcomingHeading">
+        <div class="section-heading"><h2 id="upcomingHeading">Upcoming</h2><span id="upcomingCount" class="count">0</span></div>
+        <div id="upcomingList" class="meeting-list" aria-live="polite"></div>
+      </section>
+    </main>
+    <footer><span class="privacy-dot"></span> Stored locally in Thunderbird</footer>
+    <script src="popup.js"></script>
+  </body>
+</html>
